@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74fe4c8514a3bd442b3ffc6ad30c607b, type: 3}
+  m_Name: PlayerStart_RedSet
+  m_EditorClassIdentifier: 
+  playerStart:
+    DiceSetName: Red set
+    DiceSetDescription: Starts with 1 Red Chip
+    startMoney: 10
+    rolls: 3
+    maxDices: 10
+    maxChips: 5
+    diceSet: {fileID: 11400000, guid: efb8fcbd35b9e6b4583d7c3723ac83ad, type: 2}
+    chipsSet: {fileID: 11400000, guid: b1ccb9492e44a15468eec551444a19bc, type: 2}
+    betButtonsSet: {fileID: 11400000, guid: c38bf642b76471740b79ce118b87a2b2, type: 2}

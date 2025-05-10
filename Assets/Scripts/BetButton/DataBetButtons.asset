@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92fea222e2df71a419972a7894464acf, type: 3}
+  m_Name: DataBetButtons
+  m_EditorClassIdentifier: 
+  AllBetButtons:
+  - {fileID: 11400000, guid: 5fd040ab96d013b48ba7391e4ee74cb3, type: 2}
+  - {fileID: 11400000, guid: 62dbdba5312414847ade96be6a455305, type: 2}
+  - {fileID: 11400000, guid: cb4e1f507134a544199cfa39c821b696, type: 2}
+  - {fileID: 11400000, guid: 5bf1b1f6f4487b04a97c9eb0495e5039, type: 2}
+  - {fileID: 11400000, guid: a2be7e1b891c25e4185cc7f32dc60f40, type: 2}
+  - {fileID: 11400000, guid: bb200d4d5d715904f93d5f6701ff5f4f, type: 2}
+  - {fileID: 11400000, guid: 7d20be3b68c72b645a763d040482547a, type: 2}
+  - {fileID: 11400000, guid: 2b01f5ee1a7e90e46a966de9fa3fe2c6, type: 2}
+  - {fileID: 11400000, guid: 9a918dc1dbdf9ea4ebe047024bf2120a, type: 2}
+  - {fileID: 11400000, guid: 505ae55acff121447a927a07cb430d1d, type: 2}
+  - {fileID: 11400000, guid: b76e088e9efbe904d9dd30aeaea031ef, type: 2}
+  - {fileID: 11400000, guid: 353487efa46f0d54abbf09341b92c0e7, type: 2}
