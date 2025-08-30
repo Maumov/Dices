@@ -28,6 +28,7 @@ public class DebugUI : MonoBehaviour
 
     private void OnGUI()
     {
+#if UNITY_EDITOR
         Results();
         
         Chips();
@@ -37,6 +38,7 @@ public class DebugUI : MonoBehaviour
         Money();
 
         GameFlow();
+#endif
     }
     
     bool showResults = false;
