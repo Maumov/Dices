@@ -10,13 +10,15 @@ public class RunSettingsManager : MonoBehaviour
     public delegate void RunSettingsChangeDelegate();
     public event RunSettingsChangeDelegate OnRunSettingsChange;
 
-    private void Start()
-    {
-        OnRunSettingsChange?.Invoke();
-    }
     public PlayerStart GetPlayerStart()
     {
         return playerState.GetPlayerStart();
+    }
+
+    public void Init()
+    {
+        playerState.InitPlayerStart();
+        OnRunSettingsChange?.Invoke();
     }
 
     public void Next()

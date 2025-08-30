@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IntroCinematic : MonoBehaviour
+public class ChipsUI : MonoBehaviour
 {
-    public GameObject[] Dices;
     
 }

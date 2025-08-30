@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChipAnimation : MonoBehaviour
 {
     [SerializeField] Animator animator;
-    [SerializeField] ChipPlayerInteractions chip;
+    [SerializeField] ChipController chip;
     [SerializeField] Vector3 movementVector = Vector3.zero;
     [SerializeField] float speed = 0.1f;
 
@@ -15,6 +15,7 @@ public class ChipAnimation : MonoBehaviour
     
     private void Start()
     {
+        selected = false;
         chip.OnSelected += Selected;
         chip.OnUnselected += Unselected;
     }
@@ -31,14 +32,25 @@ public class ChipAnimation : MonoBehaviour
         transform.Translate( movementVector * speed * Time.deltaTime );
     }
 
+    bool selected = false;
     public void Selected()
     {
-        animator.SetTrigger( selectedNameHash );
+        
+        if ( selected == false )
+        {
+            selected = true;
+            Debug.Log( "Animation Selected" );
+            animator.SetTrigger( selectedNameHash );
+        }
     }
     public void Unselected()
     {
-        Debug.Log("Animation Unselected");
-        animator.SetTrigger( unselectedNameHash );
+        if ( selected == true )
+        {
+            selected = false;
+            Debug.Log( "Animation Unselected" );
+            animator.SetTrigger( unselectedNameHash );
+        }
     }
     public void Pop()
     {

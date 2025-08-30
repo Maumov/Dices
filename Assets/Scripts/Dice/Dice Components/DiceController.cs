@@ -327,4 +327,10 @@ public class DiceController : ItemController
     {
         return diceData.sellCost;
     }
+
+    public override bool CanBuyItem()
+    {
+        PlayerState playerState = FindObjectOfType<PlayerState>();
+        return playerState.GetDicesCount() < playerState.GetMaxDices();
+    }
 }

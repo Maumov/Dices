@@ -7,6 +7,7 @@ public class DebugUI : MonoBehaviour
     [SerializeField] ChipsManager chipsManager;
     [SerializeField] DicesManager dicesManager;
     [SerializeField] PlayerState playerState;
+    [SerializeField] GameFlowInteractions gameFlowInteractions;
 
     [SerializeField] Button ResetButton;
     [SerializeField] TMPro.TextMeshProUGUI SumDices;
@@ -15,6 +16,10 @@ public class DebugUI : MonoBehaviour
     int sum;
     Dictionary<BETS, bool> results = new Dictionary<BETS, bool>();
 
+    float x = 0f;
+    float y = 0f;
+    float width = 200f;
+    float height = 20f;
     public void SetResultValues( int _sum, Dictionary<BETS, bool> _results )
     {
         sum = _sum;
@@ -30,18 +35,24 @@ public class DebugUI : MonoBehaviour
         Dices();
 
         Money();
+
+        GameFlow();
     }
     
     bool showResults = false;
     void Results()
     {
-        showResults = GUI.Toggle( new Rect( 10f, 10f, 200f, 20f ), showResults, "Show Results" );
+        x = 10f;
+        y = 10f;
+        showResults = GUI.Toggle( new Rect( x, y, width, height ), showResults, "Show Results" );
         if ( !showResults )
         {
             return;
         }
         string label = "Sum Of Dices : " + sum;
-        GUI.Label( new Rect( 10f, 21f, 200f, 20f ), label );
+        y += height * 0.7f;
+        GUI.Label( new Rect( x, y, width, height ), label );
+        y += height * 0.7f;
         for ( int i = 0 ; i < 41 ; i++ )
         {
             BETS bets = ( BETS ) i;
@@ -49,24 +60,30 @@ public class DebugUI : MonoBehaviour
             results.TryGetValue( bets, out res );
             label = string.Format( bets + " : " + res );
             GUI.color = res ? Color.green : Color.white;
-            GUI.Label( new Rect( 10f, 32f + ( 11 * i ), 200f, 20f ), label );
+            GUI.Label( new Rect( x, y + ( height * 0.7f * i ), width, height ), label );
         }
     }
 
     bool showChips = false;
     void Chips()
     {
-        showChips = GUI.Toggle( new Rect( 220f, 10f, 200f, 20f ), showChips, "Chips Menu" );
+        
+        y = 10f;
+        width = 120f;
+        x += width + 100f;
+        showChips = GUI.Toggle( new Rect( x, y, width, height ), showChips, "Chips Menu" );
+        showChips = GUI.Toggle( new Rect( x, y, width, height ), showChips, "Chips Menu" );
         if ( !showChips )
         {
             return;
         }
-
-        if ( GUI.Button( new Rect( 220f, 30f, 200f, 20f ), "White Chip" ) )
+        y += height;
+        if ( GUI.Button( new Rect( x, y, width, height ), "White Chip" ) )
         {
             chipsManager.GiveChipToPlayer( 0 );
         }
-        if ( GUI.Button( new Rect( 220f, 50f, 200f, 20f ), "Red Chip" ) )
+        y += height;
+        if ( GUI.Button( new Rect( x, y, width, height ), "Red Chip" ) )
         {
             chipsManager.GiveChipToPlayer( 1 );
         }
@@ -75,17 +92,20 @@ public class DebugUI : MonoBehaviour
     bool showDices = false;
     void Dices()
     {
-        showDices = GUI.Toggle( new Rect( 420f, 10f, 200f, 20f ), showDices, "Dices Menu" );
+        x += width + 100f;
+        y = 10f;
+        showDices = GUI.Toggle( new Rect( x, y, width, height ), showDices, "Dices Menu" );
         if ( !showDices )
         {
             return;
         }
-
-        if ( GUI.Button( new Rect( 420f, 30f, 200f, 20f ), "White Dice" ) )
+        y += height;
+        if ( GUI.Button( new Rect( x, y, width, height ), "White Dice" ) )
         {
             dicesManager.GiveDiceToPlayer( 0 );
         }
-        if ( GUI.Button( new Rect( 420f, 50f, 200f, 20f ), "Red Dice" ) )
+        y += height;
+        if ( GUI.Button( new Rect( x, y, width, height ), "Red Dice" ) )
         {
             dicesManager.GiveDiceToPlayer( 1 );
         }
@@ -93,7 +113,9 @@ public class DebugUI : MonoBehaviour
 
     void Money()
     {
-        if ( GUI.Button( new Rect( 620f, 30f, 200f, 20f ), "Give $10" ) )
+        x += width + 100f;
+        y = 30f;
+        if ( GUI.Button( new Rect( x, y, width, height ), "Give $10" ) )
         {
             playerState.AddCoins( 10 );
         }
@@ -110,5 +132,35 @@ public class DebugUI : MonoBehaviour
             ResultsUI[ i ].text = string.Format( "False");
         }
         */
+    }
+
+    void GameFlow()
+    {
+        x += width + 100f;
+
+        y = 30f;
+        if ( GUI.Button( new Rect( x, y, width, height ), "Mainmenu" ) )
+        {
+            gameFlowInteractions.GoToMainMenu();
+        }
+
+        y += height;
+        if ( GUI.Button( new Rect( x, y, width, height ), "StageSelect" ) )
+        {
+            gameFlowInteractions.GoToStageSelect();
+        }
+
+        y += height;
+        if ( GUI.Button( new Rect( x, y, width, height ), "Play" ) )
+        {
+            gameFlowInteractions.GoToPlay();
+        }
+
+        y += height;
+        if ( GUI.Button( new Rect( x, y, width, height ), "Shop" ) )
+        {
+            gameFlowInteractions.GoToShop();
+        }
+        
     }
 }

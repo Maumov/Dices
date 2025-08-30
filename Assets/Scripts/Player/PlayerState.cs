@@ -6,6 +6,7 @@ using UnityEngine.Playables;
 public class PlayerState : MonoBehaviour
 {
     [SerializeField] PlayerStart playerStart;
+    bool playerStartInit = false;
     [SerializeField] int startMoney;
     [SerializeField] int rolls = 3;
     [SerializeField] int maxDices;
@@ -19,9 +20,7 @@ public class PlayerState : MonoBehaviour
     [SerializeField] int dicesPerRoll = 5;
 
 
-    [SerializeField] GameFlowManager gameFlowController;
-    [SerializeField] StageFlowController stageFlowController;
-    [SerializeField] LevelUI levelUI;
+    [SerializeField] RoundFlowController stageFlowController;
     [SerializeField] GameManager gameManager;
     [SerializeField] RunSettingsManager runSettingsManager;
     [SerializeField] PlayerDices playerDices;
@@ -37,8 +36,22 @@ public class PlayerState : MonoBehaviour
         }
     }
 
+    public void InitPlayerStart()
+    {
+        if ( !playerStartInit )
+        {
+            SelectedStartSetup += 0;
+            playerStartInit = true;
+        }
+    }
+
     public PlayerStart GetPlayerStart()
     {
+        if ( !playerStartInit )
+        {
+            SelectedStartSetup = 0;
+            playerStartInit = true;
+        }
         return playerStart;
     }
 
@@ -62,25 +75,12 @@ public class PlayerState : MonoBehaviour
 
     private void OnEnable()
     {
-        
-        stageFlowController.OnStageStart += StageStarted;
-        stageFlowController.OnStageEnd += StageEnded;
-        stageFlowController.OnDicesRolled += DicesRolled;
-
         runSettingsManager.OnRunSettingsChange += SetRunSettingsForPlayer;
-    }
-
-    private void Start()
-    {
-        FlowState runSettingsState = gameFlowController.GetFlowState( GameFlowState.RunSettings );
-        runSettingsState.OnClose += SetupPlayerStart;
-        SelectedStartSetup = 0;
     }
 
     private void OnDisable()
     {
-        FlowState runSettingsState = gameFlowController.GetFlowState( GameFlowState.RunSettings );
-        runSettingsState.OnClose -= SetupPlayerStart;
+       
     }
 
     void SetRunSettingsForPlayer()
@@ -96,7 +96,6 @@ public class PlayerState : MonoBehaviour
     void StageStarted()
     {
         rollsRemaining = rolls;
-        levelUI.SetRolls( GetRollsRemaining(), GetRolls() );
     }
     void StageEnded()
     {
@@ -105,7 +104,6 @@ public class PlayerState : MonoBehaviour
     void DicesRolled()
     {
         rollsRemaining--;
-        levelUI.SetRolls( GetRollsRemaining(), GetRolls() );
     }
 
     public bool HasRollsRemaining()
@@ -122,6 +120,26 @@ public class PlayerState : MonoBehaviour
     {
         return dicesPerRoll;
     }
+
+    public int GetDicesCount()
+    {
+        return playerDices.DiceCount();
+    }
+    public int GetMaxDices()
+    {
+        return maxDices;
+    }
+
+    public int GetChipsCount()
+    {
+        return playerChips.ChipsCount();
+    }
+
+    public int GetMaxChips()
+    {
+        return maxChips;
+    }
+
 
     public int GetRollsRemaining()
     {

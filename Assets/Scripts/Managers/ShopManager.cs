@@ -13,19 +13,16 @@ public class ShopManager : MonoBehaviour
     [SerializeField] ChipsManager chipsManager;
     [SerializeField] DicesManager dicesManager;
     [SerializeField] ItemContainer shopItemsContainer;
+    [SerializeField] PlayerState playerState;
 
     private void OnEnable()
     {
-        FlowState shopState = gameFlowController.GetFlowState( GameFlowState.Shop );
-        shopState.OnOpen += InitShopItems;
-        shopState.OnClose += EndShopItems;
+        playerState.OnMoneyUpdated += MoneyUpdated;
     }
 
     private void OnDisable()
     {
-        FlowState shopState = gameFlowController.GetFlowState( GameFlowState.Shop );
-        shopState.OnOpen -= InitShopItems;
-        shopState.OnClose -= EndShopItems;
+        playerState.OnMoneyUpdated -= MoneyUpdated;
     }
 
     [ContextMenu("TestGenerateSingleItem")]
@@ -107,4 +104,21 @@ public class ShopManager : MonoBehaviour
         int itemPrice = itemToBuy.GetItemBuyPrice();
         playerState.RemoveCoins( itemPrice );
     }
+
+    public void SellItem( ItemController item )
+    {
+        PlayerState playerState = FindObjectOfType<PlayerState>();
+        int coinValueOfItem = item.GetItemSellPrice();
+        playerState.AddCoins( coinValueOfItem );
+    }
+
+    void MoneyUpdated()
+    {
+        ShopItem[] items = FindObjectsOfType<ShopItem>();
+        foreach ( ShopItem item in items )
+        {
+            item.CheckBuyRequirements();
+        }
+    }
+
 }

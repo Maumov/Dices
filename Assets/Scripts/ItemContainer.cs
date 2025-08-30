@@ -103,4 +103,23 @@ public class ItemContainer : MonoBehaviour
         }
         currentItems = new List<GameObject>();
     }
+
+    public bool HasItems()
+    {
+        return currentItems.Count > 0;
+    }
+
+    public GameObject GetItem( int index)
+    {
+        if ( index >= currentItems.Count)
+        {
+            index = currentItems.Count - 1;
+        }
+        if ( currentItems.Count == 0)
+        {
+            return null;
+        }
+        return currentItems[ index ];
+    }
+
 }

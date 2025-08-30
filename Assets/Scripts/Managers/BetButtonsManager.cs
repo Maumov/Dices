@@ -6,7 +6,6 @@ public class BetButtonsManager : MonoBehaviour
 {
     [SerializeField] BetButton[] buttons;
     Dictionary<BETS, BetButton> buttonDictionary;
-    [SerializeField] GameFlowManager gameFlowManager;
     [SerializeField] PlayerState playerState;
     [SerializeField] CalculationManager calculationManager;
     List<BetButtonDataScriptableObject> betButtonsData;
@@ -48,21 +47,8 @@ public class BetButtonsManager : MonoBehaviour
         return betButtonsHasChips;
     }
 
-    private void Start()
-    {
-        FlowState flowStateRunStart = gameFlowManager.GetFlowState( GameFlowState.RunSettings );
-        flowStateRunStart.OnClose += SetupValuesToButtons;
-        FlowState flowStatePlay = gameFlowManager.GetFlowState( GameFlowState.Play );
-        flowStatePlay.OnOpen += ClearBetButtonsChips;
-    }
-
     private void OnDisable()
     {
-        FlowState flowStateRunStart = gameFlowManager.GetFlowState( GameFlowState.RunSettings );
-        flowStateRunStart.OnClose -= SetupValuesToButtons;
-        FlowState flowStatePlay = gameFlowManager.GetFlowState( GameFlowState.Play );
-        flowStatePlay.OnOpen -= ClearBetButtonsChips;
-
         foreach ( BetButton button in buttons )
         {
             button.OnChipAdded -= ChipAddedToBet;
@@ -80,7 +66,7 @@ public class BetButtonsManager : MonoBehaviour
 
     }
 
-    void SetupValuesToButtons()
+    public void SetupValuesToButtons()
     {
         betButtonsData = new List<BetButtonDataScriptableObject>();
         betButtonsData.AddRange( playerState.GetBetButtonData() );

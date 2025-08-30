@@ -6,6 +6,7 @@ using UnityEngine;
 public class CalculationManager : MonoBehaviour
 {
     [SerializeField] PlayerDices dicesManager;
+    [SerializeField] GamePlayDices gameDices;
     [SerializeField] DebugUI uiManager;
     
     [SerializeField] BetButtonsManager betButtons;
@@ -48,7 +49,7 @@ public class CalculationManager : MonoBehaviour
         for ( int i = 0 ; i < diceCount ; i++ )
         {
             CalculationData.indexOfCurrentDice = i;
-            if ( dicesManager.DiceCounted() )
+            if ( gameDices.DiceCounted() )
             {
                 yield return ProcessDice();
             }
@@ -70,7 +71,7 @@ public class CalculationManager : MonoBehaviour
 
     IEnumerator ProcessDice()
     {
-        yield return dicesManager.ProcessDice();
+        yield return gameDices.ProcessDice();
         yield return WaitForSeconds();
         CalculationData.poppedDiceCount++;
     }
@@ -94,9 +95,9 @@ public class CalculationManager : MonoBehaviour
         for ( int i = 0 ; i < diceCount ; i++ )
         {
             CalculationData.indexOfCurrentDice = i;
-            if ( !dicesManager.DiceCounted() )
+            if ( !gameDices.DiceCounted() )
             {
-                yield return dicesManager.ProcessDice();
+                yield return gameDices.ProcessDice();
             }
         }
     }

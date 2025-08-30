@@ -4,37 +4,34 @@ using UnityEngine;
 
 public class GameFlowInteractions : MonoBehaviour
 {
-    GameFlowManager gameFlowController;
-    private void OnEnable()
-    {
-        gameFlowController = GetComponent<GameFlowManager>();
-    }
+    [SerializeField] MainMenuController mainMenuController;
+    
     public void GoToMainMenu()
     {
-        gameFlowController.GoTo( GameFlowState.MainMenu );
+        mainMenuController.Show();
     }
     public void GoToRunSettings()
     {
-        gameFlowController.GoTo( GameFlowState.RunSettings );
+        //gameFlowController.GoTo( GameFlowState.RunSettings );
     }
     public void GoToStageSelect()
     {
-        gameFlowController.GoTo( GameFlowState.StageSelect );
+        //gameFlowController.GoTo( GameFlowState.StageSelect );
     }
     public void GoToPlay()
     {
-        gameFlowController.GoTo( GameFlowState.Play );
+        //gameFlowController.GoTo( GameFlowState.Play );
     }
     public void GoToShop()
     {
-        gameFlowController.GoTo( GameFlowState.Shop );
+        //gameFlowController.GoTo( GameFlowState.Shop );
     }
     public void GoToPostPlay()
     {
-        gameFlowController.GoTo( GameFlowState.PostPlay );
+        //gameFlowController.GoTo( GameFlowState.PostPlay );
     }
     public void GoToNextLevel()
     {
-        gameFlowController.GoTo( GameFlowState.StageSelect );
+        //gameFlowController.GoTo( GameFlowState.StageSelect );
     }
 }

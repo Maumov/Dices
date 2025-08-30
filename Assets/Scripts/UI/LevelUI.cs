@@ -8,14 +8,10 @@ public class LevelUI : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI points;
     [SerializeField] TMPro.TextMeshProUGUI target;
     [SerializeField] TMPro.TextMeshProUGUI roll;
-    [SerializeField] TMPro.TextMeshProUGUI bonus;
-    [SerializeField] TMPro.TextMeshProUGUI earnings;
 
     Animator levelAnimator;
     Animator pointsAnimator;
     Animator targetAnimator;
-    Animator bonusAnimator;
-    Animator earningsAnimator;
     Animator rollAnimator;
 
     readonly int popNameHash = Animator.StringToHash( "Pop" );
@@ -26,8 +22,6 @@ public class LevelUI : MonoBehaviour
         pointsAnimator = points.GetComponent<Animator>();
         targetAnimator = target.GetComponent<Animator>();
         rollAnimator = roll.GetComponent<Animator>();
-        bonusAnimator = bonus.GetComponent<Animator>();
-        earningsAnimator = earnings.GetComponent<Animator>();
     }
 
 
@@ -47,15 +41,6 @@ public class LevelUI : MonoBehaviour
     public void SetRolls( int value, int max)
     {
         roll.text = value.ToString() + "/" + max.ToString();
-    }
-    public void SetEarnings( int value )
-    {
-        earnings.text = value.ToString();
-    }
-
-    public void SetBonus( int value )
-    {
-        bonus.text = value.ToString();
     }
 
     public delegate void OnUpdateLabel( int value );

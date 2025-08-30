@@ -12,21 +12,19 @@ public enum StageFlowState
     End
 }
 
-public class StageFlowController : MonoBehaviour
+public class RoundFlowController : MonoBehaviour
 {
     public StageFlowState currentState;
-    [SerializeField] GameFlowManager gameFlowController;
     [SerializeField] GameFlowInteractions gameFlowInteractions;
     [SerializeField] PlayerDices dicesManager;
     [SerializeField] PlayerState playerState;
     [SerializeField] CalculationManager calculationManager;
     [SerializeField] LevelManager levelManager;
-    [SerializeField] ShopManager shop;
     [SerializeField] PlayerState playerStateManager;
 
-    public delegate void StageFlowEvent();
-    public event StageFlowEvent OnStageStart, OnDicesRolled, OnDicesReseted, OnStageEnd;
-    public event StageFlowEvent OnDicesFinishedRolling;
+    public delegate void RoundFlowEvent();
+    public event RoundFlowEvent OnStageStart, OnDicesRolled, OnDicesReseted, OnStageEnd;
+    public event RoundFlowEvent OnDicesFinishedRolling;
 
     private void OnEnable()
     {
@@ -42,19 +40,7 @@ public class StageFlowController : MonoBehaviour
         return currentState == StageFlowState.Play;
     }
 
-    private void Start()
-    {
-        FlowState flowStart = gameFlowController.GetFlowState( GameFlowState.Play );
-        flowStart.OnOpen += StartStage;
-    }
-
-    private void OnDisable()
-    {
-        FlowState flowStart = gameFlowController.GetFlowState( GameFlowState.Play );
-        flowStart.OnOpen -= StartStage;
-    }
-
-    void StartStage()
+    public void StartStage()
     {
         OnStageStart?.Invoke();
         currentState = StageFlowState.Play;

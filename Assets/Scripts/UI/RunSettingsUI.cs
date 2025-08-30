@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class RunSettingsUI : MonoBehaviour
 {
+
     [SerializeField] RunSettingsManager runSettingsManager;
 
     [SerializeField] TextMeshProUGUI diceSetName;
@@ -18,6 +19,8 @@ public class RunSettingsUI : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI maxDices;
     [SerializeField] TextMeshProUGUI maxChips;
+
+    
     private void OnEnable()
     {
         runSettingsManager.OnRunSettingsChange += UpdateUI;
@@ -27,13 +30,6 @@ public class RunSettingsUI : MonoBehaviour
     {
         runSettingsManager.OnRunSettingsChange -= UpdateUI;
     }
-
-
-    private void Start()
-    {
-        UpdateUI();
-    }
-
 
     void UpdateUI() {
 

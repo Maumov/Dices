@@ -60,6 +60,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   distance: 30
+  chipController: {fileID: 7557356976835512378}
 --- !u!114 &3139788019631595743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7816233367198416977}
-  chip: {fileID: 5536486192552241339}
+  chip: {fileID: 7557356976835512378}
   movementVector: {x: 0, y: 0, z: 0}
   speed: 0.05
 --- !u!95 &7816233367198416977
@@ -135,9 +136,9 @@ MonoBehaviour:
       moneyReturn: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   chipEffect: {fileID: -144159181929630940}
-  chipInteractions: {fileID: 5536486192552241339}
   chipVisuals: {fileID: 4058218489350461156}
   currentContainer: {fileID: 0}
+  selected: 0
   layerMaskBetButton:
     serializedVersion: 2
     m_Bits: 64

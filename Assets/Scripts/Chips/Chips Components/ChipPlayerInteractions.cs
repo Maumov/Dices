@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,29 +15,29 @@ public class ChipPlayerInteractions : MonoBehaviour
     [SerializeField] LayerMask layerMaskDragging;
     [SerializeField] float distance = 30f;
 
-    public delegate void ChipInteraction();
-    public event ChipInteraction OnSelected, OnUnselected;
-
-    ChipController chipController;
+    [SerializeField] ChipController chipController;
 
     IMoveTo move;
+
     private void OnEnable()
     {
         move = GetComponent<IMoveTo>();
-        chipController = GetComponent<ChipController>();
     }
 
     void Start()
     {
+        /*
         EventTrigger trigger = GetComponentInChildren<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.Drag;
         entry.callback.AddListener( ( data ) => { OnDragDelegate( ( PointerEventData ) data ); } );
         trigger.triggers.Add( entry );
+        */
     }
 
     public void OnBeginDrag( BaseEventData data )
     {
+        /*
         if ( !CanBeInteracted() )
         {
             return;
@@ -51,10 +50,12 @@ public class ChipPlayerInteractions : MonoBehaviour
         {
             pointOfContact = transform.position - outHit.point;
         }
+        */
     }
 
     public void OnDragDelegate( PointerEventData data )
     {
+        /*
         if ( !CanBeInteracted() )
         {
             return;
@@ -70,7 +71,7 @@ public class ChipPlayerInteractions : MonoBehaviour
             Vector3 result = ray.origin + (ray.direction * dis);
             transform.position = result + pointOfContact;
         }
-        
+        */
     }
 
     public void MouseOver( BaseEventData data)
@@ -89,23 +90,49 @@ public class ChipPlayerInteractions : MonoBehaviour
         {
             return;
         }
+        PointerEventData pointerEventData = data as PointerEventData;
+
+        if ( pointerEventData.button == PointerEventData.InputButton.Left )
+        {
+            Clicked();
+        }
+        if ( pointerEventData.button == PointerEventData.InputButton.Right )
+        {
+            PlayerChips playerChips = FindObjectOfType<PlayerChips>();
+            playerChips.ReturnChipToPlayer( chipController );
+        }
+        /*
+        if ( !CanBeInteracted() )
+        {
+            return;
+        }
         move.StopMoving();
         OnSelected?.Invoke();
+        */
     }
+
+    public void Clicked()
+    {
+        PlayerChips playerChips = FindObjectOfType<PlayerChips>();
+
+        playerChips.SelectChip( chipController );
+    }
+
 
     public void MouseUp( BaseEventData data )
     {
+        /*
         if ( !CanBeInteracted() )
         {
             return;
         }
         Debug.Log("Mouse up");
         OnUnselected?.Invoke();
+        */
     }
 
     bool CanBeInteracted()
     {
         return chipController.CanBeInteractedWith();
     }
-
 }

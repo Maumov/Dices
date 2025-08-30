@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static ChipPlayerInteractions;
 
 
 [Serializable]
@@ -18,9 +19,29 @@ public class ChipController : ItemController
     [SerializeField] ChipDataScriptableObject chipDataScriptableObject;
     [SerializeField] ChipData chipData;
     [SerializeField] ChipEffect chipEffect;
-    [SerializeField] ChipPlayerInteractions chipInteractions;
     [SerializeField] ChipVisuals chipVisuals;
     [SerializeField] ItemContainer currentContainer;
+    [SerializeField] bool selected;
+
+    public delegate void ChipInteraction();
+    public event ChipInteraction OnSelected, OnUnselected;
+    public bool GetSelected()
+    {
+        return selected;
+    }
+
+    public void SetSelected( bool value )
+    {
+        selected = value;
+        if ( selected )
+        {
+            OnSelected?.Invoke();
+        }
+        else
+        {
+            OnUnselected?.Invoke();
+        }
+    }
 
     PlayerChips playerChips;
     private void OnEnable()
@@ -55,8 +76,6 @@ public class ChipController : ItemController
     {
         chipData = chipDataScriptableObject.chipData;
         chipVisuals.SetupVisuals( chipData );
-        chipInteractions.OnSelected += Selected;
-        chipInteractions.OnUnselected += Unselected;
     }
     public override void SetupItem()
     {
@@ -65,13 +84,17 @@ public class ChipController : ItemController
 
     void Selected()
     {
+        /*
         RemoveFromCurrentContainer( false );
+        */
     }
 
     void Unselected()
     {
+        /*
         Debug.Log("Chip Controller Unselected");
         TryToAddToBet();
+        */
     }
 
     [SerializeField] LayerMask layerMaskBetButton;
@@ -95,9 +118,26 @@ public class ChipController : ItemController
 
     public void ReturnToPlayer( ItemContainer playerChipsContainer )
     {
+        if ( playerChipsContainer == currentContainer)
+        {
+            return;
+        }
         RemoveFromCurrentContainer( true );
         SetItemContainer( playerChipsContainer );
         ReturnToContainer( true );
+    }
+
+    public void AddToBet( ItemContainer newContainer )
+    {
+        RemoveFromCurrentContainer( true );
+        SetItemContainer( newContainer );
+        ReturnToContainer( false );
+        SetSelected( false );
+    }
+
+    public bool IsInContainer( ItemContainer container)
+    {
+        return container == currentContainer;
     }
 
     void ReturnToContainer( bool simple)
@@ -133,7 +173,7 @@ public class ChipController : ItemController
 
     public override void SellItem()
     {
-        throw new NotImplementedException();
+
     }
 
     public override void GiveItem()
@@ -150,5 +190,11 @@ public class ChipController : ItemController
     {
         return chipData.sellCost;
         
+    }
+
+    public override bool CanBuyItem()
+    {
+        PlayerState playerState = FindObjectOfType<PlayerState>();
+        return playerState.GetChipsCount() < playerState.GetMaxChips();
     }
 }

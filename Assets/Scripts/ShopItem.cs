@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopItem : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class ShopItem : MonoBehaviour
     [SerializeField] int itemBuyPrice;
     [SerializeField] int itemSellPrice;
 
+    [SerializeField] Button buyButton;
+
+    ItemController itemController;
     public void InitShopItem( GameObject item, Camera cam)
     {
         original = item;
@@ -26,11 +30,12 @@ public class ShopItem : MonoBehaviour
     {
         itemGameObject = Instantiate(item);
         //itemGameObject.transform.SetParent(itemPosition);
-        ItemController d = itemGameObject.GetComponent<ItemController>();
-        d.SetupItem();
+        itemController = itemGameObject.GetComponent<ItemController>();
+        itemController.SetupItem();
         SetItemPosition();
-        itemBuyPrice = d.GetItemBuyPrice();
-        itemSellPrice = d.GetItemSellPrice();
+        itemBuyPrice = itemController.GetItemBuyPrice();
+        itemSellPrice = itemController.GetItemSellPrice();
+        CheckBuyRequirements();
         //itemGameObject.transform.scale = Vector3.one;
         yield return null;
     }
@@ -54,6 +59,12 @@ public class ShopItem : MonoBehaviour
         //position.y = itemYPosition;
         Debug.DrawRay( transform.position, position, Color.red, 2f );
         return position;
+    }
+
+    public void CheckBuyRequirements()
+    {
+        bool canBuyItem = itemController.CanBuyItem();
+        buyButton.interactable = canBuyItem;
     }
 
     public void StartBuyItem()

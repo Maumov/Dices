@@ -18,7 +18,7 @@ public class CalculationUI : MonoBehaviour
     readonly int popNameHash = Animator.StringToHash("Pop");
 
     [SerializeField] GameFlowManager gameFlowController;
-    [SerializeField] StageFlowController stageFlowController;
+    [SerializeField] RoundFlowController stageFlowController;
     private void Awake()
     {
         betsAnimator = currentBetsValueLabel.GetComponent<Animator>();
@@ -26,26 +26,6 @@ public class CalculationUI : MonoBehaviour
         totalAnimator = currentTotalValueLabel.GetComponent<Animator>();
         ResetValues();
 
-        gameFlowController = FindObjectOfType<GameFlowManager>();
-        
-    }
-
-    private void Start()
-    {
-        FlowState runSettingsState = gameFlowController.GetFlowState( GameFlowState.RunSettings );
-        runSettingsState.OnClose += ResetValues;
-
-        FlowState playState = gameFlowController.GetFlowState( GameFlowState.Play );
-        playState.OnClose += ResetValues;
-    }
-
-    private void OnDisable()
-    {
-        FlowState runSettingsState = gameFlowController.GetFlowState( GameFlowState.RunSettings );
-        runSettingsState.OnClose -= ResetValues;
-
-        FlowState playState = gameFlowController.GetFlowState( GameFlowState.Play );
-        playState.OnClose -= ResetValues;
     }
 
     public void ResetValues()

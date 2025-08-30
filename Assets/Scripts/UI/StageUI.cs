@@ -7,23 +7,20 @@ public class StageUI : MonoBehaviour
 {
     [SerializeField] Button RollButton;
 
-    PlayerDices dicesManager;
-    BetButtonsManager betButtonsManager;
+    [SerializeField] GamePlayDices dicesManager;
+    [SerializeField] BetButtonsManager betButtonsManager;
 
-    StageFlowController stageFlowController;
+    [SerializeField] RoundFlowController stageFlowController;
 
     private void OnEnable()
     {
         RollButton.interactable = false;
 
-        stageFlowController = FindObjectOfType<StageFlowController>();
         stageFlowController.OnDicesReseted += ResetResultValues;
 
-        dicesManager = FindObjectOfType<PlayerDices>();
         dicesManager.OnDiceSelected += UpdateRollButtonInteraction;
         dicesManager.OnDiceDeSelected += UpdateRollButtonInteraction;
 
-        betButtonsManager = FindObjectOfType<BetButtonsManager>();
         betButtonsManager.OnBetAdded += UpdateRollButtonInteraction;
         betButtonsManager.OnBetRemoved += UpdateRollButtonInteraction;
     }

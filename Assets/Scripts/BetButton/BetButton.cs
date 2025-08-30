@@ -10,7 +10,7 @@ public class BetButton : MonoBehaviour
     [SerializeField] List<ChipController> chips;
     CalculationManager calculationManager;
     [SerializeField] ItemContainer chipContainer;
-
+    [SerializeField] ChipSelector chipSelector;
     
     public delegate void BetButtonDelegate();
     public event BetButtonDelegate OnBetProcessed, OnDataUpdated, OnChipAdded, OnChipRemoved;
@@ -141,5 +141,9 @@ public class BetButton : MonoBehaviour
         Debug.Log( gameObject.name + " " + GetKey() + " Chip removed." );
         OnChipRemoved?.Invoke();
     }
-    
+
+    public void OnMouseDown()
+    {
+        chipSelector.BetButtonClicked( this );
+    }
 }

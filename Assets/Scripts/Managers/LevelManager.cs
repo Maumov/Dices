@@ -15,23 +15,15 @@ public class LevelManager : MonoBehaviour
     [SerializeField] LevelUI levelUI;
 
     [SerializeField] GameFlowManager gameFlowManager;
-    [SerializeField] StageFlowController stageFlowManager;
+    [SerializeField] RoundFlowController stageFlowManager;
     private void OnEnable()
     {
-        FlowState flowStart = gameFlowManager.GetFlowState( GameFlowState.RunSettings );
-        flowStart.OnClose += ResetRun;
-        FlowState flowPlay = gameFlowManager.GetFlowState( GameFlowState.Play );
-        flowPlay.OnOpen += SetupLevel;
-        flowPlay.OnClose += Upgrade;
+       
     }
 
     private void OnDisable()
     {
-        FlowState flowStart = gameFlowManager.GetFlowState( GameFlowState.RunSettings );
-        flowStart.OnClose -= ResetRun;
-        FlowState flowPlay = gameFlowManager.GetFlowState( GameFlowState.Play );
-        flowPlay.OnOpen -= SetupLevel;
-        flowPlay.OnClose -= Upgrade;
+       
     }
 
     public int GetFinalEarnings()
@@ -147,10 +139,12 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator Bonus()
     {
+        /*
         currentBonusPoints = currentLevel * bonusForWinning;
         yield return levelUI.AnimateAddingNumber( 0, currentBonusPoints, duration, levelUI.SetBonus );
         yield return new WaitForSeconds( duration );
-        
+        */
+        yield return null;
     }
 
     public IEnumerator Won()
@@ -184,7 +178,7 @@ public class LevelManager : MonoBehaviour
     public void FlushEaningsToPlayer()
     {
         finalEarnings = 0;
-        levelUI.SetEarnings( finalEarnings );
+        //levelUI.SetEarnings( finalEarnings );
     }
 
 }

@@ -18,23 +18,17 @@ public enum GameFlowState
 [System.Serializable]
 public class FlowState
 {
-    public GameObject stateObjects;
+    public GameFlowState state;
     public UnityEvent OnCloseScenario, OnOpenScenario;
 
-    public delegate void GameFlowEvent();
-    public event GameFlowEvent OnClose, OnOpen;
     public void CloseScenario()
     {
         OnCloseScenario?.Invoke();
-        OnClose?.Invoke();
-        stateObjects.SetActive(false);
     }
 
     public void OpenScenario()
     {
         OnOpenScenario?.Invoke();
-        OnOpen?.Invoke();
-        stateObjects.SetActive(true);
     }
 }
 
@@ -44,40 +38,25 @@ public class GameFlowManager : MonoBehaviour
     public FlowState[] Scenarios;
     Dictionary<GameFlowState, FlowState> states = new Dictionary<GameFlowState, FlowState>();
 
-    LevelManager levelManager;
+    [SerializeField] LevelManager levelManager;
 
+    bool init = false;
     public FlowState GetFlowState( GameFlowState gameFlowState )
     {
+        if (!init)
+        {
+            Init();
+        }
         return states[gameFlowState];
     }
 
-    private void OnEnable()
-    {
-        levelManager = FindObjectOfType<LevelManager>();
-        states.Add( GameFlowState.None, Scenarios[ 0 ] );
-        states.Add( GameFlowState.Intro, Scenarios[ 0 ] );
-        states.Add( GameFlowState.MainMenu, Scenarios[ 1 ]  );
-        states.Add( GameFlowState.RunSettings, Scenarios[ 2 ] );
-        states.Add( GameFlowState.StageSelect, Scenarios[ 3 ] );
-        states.Add( GameFlowState.Play, Scenarios[ 4 ] );
-        states.Add( GameFlowState.Shop, Scenarios[ 5 ] );
-        states.Add( GameFlowState.PostPlay, Scenarios[ 6 ] );
-        states.Add( GameFlowState.GameOver, Scenarios[ 7 ] );
-        CloseAllScenarios();
-    }
-
-    void CloseAllScenarios()
+    void Init()
     {
         for ( int i = 0 ; i < Scenarios.Length ; i++ )
         {
-            Scenarios[i].CloseScenario();
+            states.Add( Scenarios[ i ].state, Scenarios[ i ] );
         }
-    }
-
-
-    private void Start()
-    {
-        GoTo( GameFlowState.Intro );
+        init = true;
     }
 
     public void GoTo( GameFlowState nextFlowState )
