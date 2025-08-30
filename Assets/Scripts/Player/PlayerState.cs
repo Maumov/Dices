@@ -76,11 +76,13 @@ public class PlayerState : MonoBehaviour
     private void OnEnable()
     {
         runSettingsManager.OnRunSettingsChange += SetRunSettingsForPlayer;
+        stageFlowController.OnStageStart += StageStarted;
     }
 
     private void OnDisable()
     {
-       
+        stageFlowController.OnStageStart -= StageStarted;
+        runSettingsManager.OnRunSettingsChange -= SetRunSettingsForPlayer;
     }
 
     void SetRunSettingsForPlayer()

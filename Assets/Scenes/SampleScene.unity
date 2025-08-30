@@ -15782,7 +15782,6 @@ MonoBehaviour:
   chips: []
   playerChipContainer: {fileID: 56375675}
   stageFlowController: {fileID: 818352936}
-  gameFlowManager: {fileID: 0}
   spawnTime: 0.5
 --- !u!114 &809005951
 MonoBehaviour:
@@ -15802,7 +15801,6 @@ MonoBehaviour:
   calculationManager: {fileID: 1944398952}
   playerState: {fileID: 809005952}
   playerDiceContainer: {fileID: 242529433}
-  gameFlowManager: {fileID: 0}
   stageFlowController: {fileID: 818352936}
   gameManager: {fileID: 1944398949}
 --- !u!114 &809005952
@@ -15836,9 +15834,7 @@ MonoBehaviour:
   coinsOnBets: 0
   rollsRemaining: 0
   dicesPerRoll: 5
-  gameFlowController: {fileID: 0}
   stageFlowController: {fileID: 818352936}
-  levelUI: {fileID: 1937186239}
   gameManager: {fileID: 1944398949}
   runSettingsManager: {fileID: 1944398955}
   playerDices: {fileID: 809005951}
@@ -16317,6 +16313,7 @@ MonoBehaviour:
   betButtonsManager: {fileID: 1944398954}
   playerChips: {fileID: 809005950}
   playerDices: {fileID: 809005951}
+  roundFlowController: {fileID: 818352936}
 --- !u!1 &818893877
 GameObject:
   m_ObjectHideFlags: 0
@@ -39254,8 +39251,6 @@ MonoBehaviour:
   points: {fileID: 516925843}
   target: {fileID: 1755413542}
   roll: {fileID: 366857097}
-  bonus: {fileID: 1673126998}
-  earnings: {fileID: 746053619}
 --- !u!1 &1944398945
 GameObject:
   m_ObjectHideFlags: 0
